@@ -16,66 +16,73 @@ class DetailsPage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            TopAppBarDetails(size: size, i: i),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Divider(
-                    thickness: 1.5,
-                  ),
-                  const SizedBox(height: 10),
-                  RichText(
-                      text: TextSpan(
-                          text: planets[i].description,
-                          style:
-                              const TextStyle(color: kTextColor, fontSize: 18),
-                          children: const [
-                        TextSpan(
-                            text: ' Read more',
-                            style: TextStyle(
-                                color: Colors.deepOrange, fontSize: 18))
-                      ])),
-                  const SizedBox(height: 10),
-                  const Divider(
-                    thickness: 1.5,
-                  ),
-                  const Text('Gallery',
-                      style: TextStyle(color: kTextColor, fontSize: 25)),
-                  const SizedBox(height: 10),
-                ],
+      body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (OverscrollIndicatorNotification overscroll) {
+            overscroll.disallowIndicator();
+            return true;
+          },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TopAppBarDetails(size: size, i: i),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Divider(
+                      thickness: 1.5,
+                    ),
+                    const SizedBox(height: 10),
+                    RichText(
+                        text: TextSpan(
+                            text: planets[i].description,
+                            style:
+                                const TextStyle(color: kTextColor, fontSize: 18),
+                            children: const [
+                          TextSpan(
+                              text: ' Read more',
+                              style: TextStyle(
+                                  color: Colors.deepOrange, fontSize: 18))
+                        ])),
+                    const SizedBox(height: 10),
+                    const Divider(
+                      thickness: 1.5,
+                    ),
+                    const Text('Gallery',
+                        style: TextStyle(color: kTextColor, fontSize: 25)),
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              height: size.height * 0.3,
-              child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: planets[i].images.length,
-                  itemBuilder: (context, j) {
-                    return Card(
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Image.network(
-                            planets[i].images[j],
-                            fit: BoxFit.cover,
-                          )),
-                    );
-                  }),
-            ),
-            const SizedBox(height: 20)
-          ],
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                height: size.height * 0.3,
+                child: planets[i].images.isEmpty
+                    ? Text('[No data available]', style: TextStyle(color: Colors.deepOrange, fontSize: 24),)
+                    : ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: planets[i].images.length,
+                        itemBuilder: (context, j) {
+                          return Card(
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.network(
+                                  planets[i].images[j],
+                                  fit: BoxFit.cover,
+                                )),
+                          );
+                        }),
+              ),
+              const SizedBox(height: 20)
+            ],
+          ),
         ),
       ),
     ));
