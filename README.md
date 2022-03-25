@@ -4,10 +4,10 @@ A small demo of a "Solar System" Flutter application, using Hero and Swiper Pack
 - Hero wigets.
 - Swiper Package.
 
-##Graphical resource
+## Graphical resource
 - FlatIcon [link](www.flaticon.com)
 
-##Useful info: Change launch icon
+## Useful info: Change launch icon
 - AppIcon [link](https://appicon.co/)
 - Tutorial for change the Launch Icon [link](https://www.geeksforgeeks.org/flutter-changing-app-icon/)
 
